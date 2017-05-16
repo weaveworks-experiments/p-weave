@@ -9,89 +9,32 @@ minimum_version_for_upgrade: '0.0.1'
 rank: 1
 serial: true
 
+provides_product_versions:
+- name: p-weave
+  version: '0.0.1'
+
 releases:
 - name: weave-scope
   file: weave-scope.tgz
-  version: 0.0.10
+  version: 0.0.11
 
 stemcell_criteria:
   os: ubuntu-trusty
   requires_cpi: false
   version: '3363'
 
-property_blueprints:
-#
-# Parameters for the entire product
-#
-- name: org
-  type: string
-  configurable: true
-  default: p-weave-org
-- name: space
-  type: string
-  configurable: true
-  default: p-weave-space
-- name: apply_open_security_group
-  type: boolean
-  configurable: true
-  default: False
-- name: allow_paid_service_plans
-  type: boolean
-  configurable: true
-  default: False
+property_blueprints: []
 
-#
-# Custom properties from the tile.yml file
-#
-
-form_types:
-
-
+form_types: []
 
 job_types:
-#
-# Default compilation job
-#
-- name: compilation
-  resource_label: compilation
-  resource_definitions:
-   - name: ram
-     type: integer
-     configurable: true
-     default: 4096
-   - name: ephemeral_disk
-     type: integer
-     configurable: true
-     default: 10240
-   - name: persistent_disk
-     type: integer
-     configurable: true
-     default: 0
-   - name: cpu
-     type: integer
-     configurable: true
-     default: 2
-  static_ip: 0
-  dynamic_ip: 1
-  max_in_flight: 1
-  single_az_only: true
-  instance_definitions:
-  - name: instances
-    type: integer
-    configurable: true
-    default: 1
 
-post_deploy_errands:
+post_deploy_errands: []
 
-pre_delete_errands:
+pre_delete_errands: []
 
 update:
   canaries: 1
   canary_watch_time: 10000-100000
   max_in_flight: 1
   update_watch_time: 10000-100000
-
-
-provides_product_versions:
-- name: p-weave
-  version: '0.0.1'
