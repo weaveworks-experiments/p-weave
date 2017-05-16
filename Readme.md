@@ -1,4 +1,4 @@
 # Building the Tile
 ```
-docker run -it -v $(pwd):/work lmarsden/tile-gen build
+docker run -v $(pwd)/product:/work -ti hangar -n weave-cloud -r /work/releases -m /work/metadata/p-weave.yml -c /work/content_migrations/p-weave.yml -g /work/migrations -v 0.0.1 -s 3363
 ```

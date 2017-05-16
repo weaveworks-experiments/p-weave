@@ -1,7 +1,8 @@
-FROM ubuntu:16.04
-RUN apt update && \
-    apt install -y python-pip rubygems && \
-    pip install tile-generator && \
-    gem install bosh_cli --no-ri --no-rdoc
+FROM ruby:2.3.4
+
+RUN git clone https://github.com/lukemarsden/hangar /hangar
+RUN cd /hangar && gem build hangar.gemspec && gem install hangar-*.gem
+
 WORKDIR /work
-ENTRYPOINT ["/usr/local/bin/tile"]
+
+ENTRYPOINT ["/usr/local/bundle/bin/hangar"]

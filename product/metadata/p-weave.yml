@@ -14,9 +14,9 @@ provides_product_versions:
   version: '0.0.1'
 
 releases:
-- name: weave-scope
-  file: weave-scope.tgz
-  version: 0.0.11
+- name: <%= releases["weave-scope"].name %>
+  file: <%= releases["weave-scope"].file %>
+  version: <%= releases["weave-scope"].version %>
 
 stemcell_criteria:
   os: ubuntu-trusty
@@ -27,7 +27,7 @@ property_blueprints: []
 
 form_types: []
 
-job_types:
+job_types: []
 
 post_deploy_errands: []
 
