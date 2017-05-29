@@ -10,13 +10,16 @@ rank: 1
 serial: true
 
 provides_product_versions:
-- name: p-weave
-  version: '0.0.1'
+- name: <%= product_name %>
+  version: <%= product_version %>
 
 releases:
-- name: <%= releases["weave-scope"].name %>
-  file: <%= releases["weave-scope"].file %>
-  version: <%= releases["weave-scope"].version %>
+- name: <%= releases['weave-scope'].name %>
+  file: <%= releases['weave-scope'].file %>
+  version: <%= releases['weave-scope'].version %>
+- name: <%= releases['runtime-configurator'].name %>
+  file: <%= releases['runtime-configurator'].file %>
+  version: <%= releases['runtime-configurator'].version %>
 
 stemcell_criteria:
   os: ubuntu-trusty
@@ -33,13 +36,10 @@ job_types:
   templates:
   - name: scope_app
     release: weave-scope
-    manifest: |
-      ---
-      consumes: {}
-      provides:
-        weave_scope_app:
-          as: weave_scope_app
-          shared: true
+    provides: |
+      weave_scope_app:
+        as: weave_scope_app
+        shared: true
   resource_definitions:
   - name: ram
     type: integer
@@ -57,10 +57,7 @@ job_types:
   - name: persistent_disk
     type: integer
     configurable: false
-    default: 512
-    constraints:
-      min: 512
-      may_only_increase: false
+    default: 0
   - name: cpu
     type: integer
     configurable: true
@@ -69,16 +66,171 @@ job_types:
       min: 1
   static_ip: 1
   dynamic_ip: 0
-  max_in_flight: 100%
+  max_in_flight: 1
+  single_az_only: false
+  instance_definition:
+    name: instances
+    configurable: true
+    default: 1
+
+- name: add-probe
+  resource_label: Install Scope Probe
+  templates:
+  - name: configurator
+    release: runtime-configurator
+  errand: true
+  resource_definitions:
+  - name: ram
+    type: integer
+    label: RAM
+    configurable: false
+    default: 512
+    constraints:
+      min: 512
+  - name: ephemeral_disk
+    type: integer
+    label: Ephemeral Disk
+    configurable: false
+    default: 512
+    constraints:
+      min: 512
+  - name: persistent_disk
+    type: integer
+    label: Persistent Disk
+    configurable: false
+    default: 0
+  - name: cpu
+    type: integer
+    label: CPU
+    configurable: false
+    default: 1
+    constraints:
+      min: 1
+  static_ip: 0
+  dynamic_ip: 1
+  max_in_flight: 1
   single_az_only: false
   instance_definition:
     name: instances
     configurable: false
     default: 1
+  property_blueprints: []
+  manifest: |
+    ---
+    runtime_configurator:
+      bosh:
+        url: https://(( $director.hostname )):25555
+        user: (( $director.username ))
+        password: (( $director.password ))
+        ca_cert: (( $director.ca_public_key ))
+      uaa:
+        url: https://(( $director.hostname )):8443
+      deploy: true
+      add:
+        releases:
+        - name: <%= releases['weave-scope'].name %>
+          version: <%= releases['weave-scope'].version %>
+        addons:
+        - name: scope-probe
+          include:
+            deployments:
+            - (( ..cf.deployment_name ))
+            - (( .deployment_name ))
+          jobs:
+          - name: scope_probe
+            release: <%= releases['weave-scope'].name %>
+            consumes:
+              weave_scope_app:
+                from: weave_scope_app
+                deployment: (( .deployment_name ))
+        - name: scope-garden
+          include:
+            deployments:
+            - (( ..cf.deployment_name ))
+            jobs:
+            - name: garden
+              release: garden-runc
+          jobs:
+          - name: scope_garden
+            release: weave-scope
+            properties:
+              weave:
+                scope:
+                  probe:
+                    garden:
+                      network: unix
+                      addr: /var/vcap/data/garden/garden.sock
+                    cf:
+                      api_url: "(( $runtime.system_api_url ))"
+                      username: (( ..cf.uaa.system_services_credentials.identity ))
+                      password: (( ..cf.uaa.system_services_credentials.password ))
+                      skip_ssl_verify: true
 
-post_deploy_errands: []
+- name: remove-probe
+  resource_label: Uninstall Scope Probe
+  templates:
+  - name: configurator
+    release: runtime-configurator
+  errand: true
+  resource_definitions:
+  - name: ram
+    type: integer
+    label: RAM
+    configurable: false
+    default: 512
+    constraints:
+      min: 512
+  - name: ephemeral_disk
+    type: integer
+    label: Ephemeral Disk
+    configurable: false
+    default: 512
+    constraints:
+      min: 512
+  - name: persistent_disk
+    type: integer
+    label: Persistent Disk
+    configurable: false
+    default: 0
+  - name: cpu
+    type: integer
+    label: CPU
+    configurable: false
+    default: 1
+    constraints:
+      min: 1
+  static_ip: 0
+  dynamic_ip: 1
+  max_in_flight: 1
+  single_az_only: false
+  instance_definition:
+    name: instances
+    configurable: false
+    default: 1
+  property_blueprints: []
+  manifest: |
+    ---
+    runtime_configurator:
+      bosh:
+        url: https://(( $director.hostname )):25555
+        user: (( $director.username ))
+        password: (( $director.password ))
+        ca_cert: (( $director.ca_public_key ))
+      uaa:
+        url: https://(( $director.hostname )):8443
+      deploy: true
+      remove:
+        releases:
+        - name: <%= releases['weave-scope'].name %>
+        addons:
+        - name: scope-probe
+        - name: scope-garden
 
-pre_delete_errands: []
+post_deploy_errands:
+- name: add-probe
+
+pre_delete_errands:
+- name: remove-probe
 
 update:
   canaries: 1
