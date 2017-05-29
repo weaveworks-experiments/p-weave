@@ -1,0 +1,6 @@
+[submodule "releases/runtime-configurator-release"]
+	path = releases/runtime-configurator-release
+	url = https://github.com/st3v/runtime-configurator-release.git
+[submodule "releases/weave-scope-release"]
+	path = releases/weave-scope-release
+	url = https://github.com/st3v/weave-scope-release.git
