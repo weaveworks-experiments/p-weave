@@ -4,3 +4,6 @@
 [submodule "releases/weave-scope-release"]
 	path = releases/weave-scope-release
 	url = https://github.com/st3v/weave-scope-release.git
+[submodule "releases/uaa-proxy-release"]
+	path = releases/uaa-proxy-release
+	url = https://github.com/st3v/uaa-proxy-release.git

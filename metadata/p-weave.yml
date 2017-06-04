@@ -20,6 +20,15 @@ releases:
 - name: <%= releases['runtime-configurator'].name %>
   file: <%= releases['runtime-configurator'].file %>
   version: <%= releases['runtime-configurator'].version %>
+- name: <%= releases['uaa-proxy'].name %>
+  file: <%= releases['uaa-proxy'].file %>
+  version: <%= releases['uaa-proxy'].version %>
+- name: <%= releases['consul'].name %>
+  file: <%= releases['consul'].file %>
+  version: <%= releases['consul'].version %>
+- name: <%= releases['routing'].name %>
+  file: <%= releases['routing'].file %>
+  version: <%= releases['routing'].version %>
 
 stemcell_criteria:
   os: ubuntu-trusty
@@ -35,11 +44,29 @@ job_types:
   resource_label: Weave Scope App
   templates:
   - name: scope_app
-    release: weave-scope
+    release: <%= releases['weave-scope'].name %>
     provides: |
       weave_scope_app:
         as: weave_scope_app
         shared: true
+  - name: uaaproxy
+    release: <%= releases['uaa-proxy'].name %>
+  - name: consul_agent
+    release: <%= releases['consul'].name %>
+    consumes: |
+      consul_common:
+        from: consul_common_link
+        deployment: (( ..cf.deployment_name ))
+      consul_client:
+        from: consul_client_link
+        deployment: (( ..cf.deployment_name ))
+      consul_server: nil
+  - name: route_registrar
+    release: <%= releases['routing'].name %>
+    consumes: |
+      nats:
+        from: nats
+        deployment: (( ..cf.deployment_name ))
   resource_definitions:
   - name: ram
     type: integer
@@ -72,12 +99,60 @@ job_types:
     name: instances
     configurable: true
     default: 1
+  property_blueprints:
+  - name: uaaproxy_session_auth_key
+    type: secret
+    label: "Session Authentication Key"
+  - name: uaaproxy_session_encrypt_key
+    type: secret
+    label: "Session Encryption Key"
+  - name: uaaproxy_proxy_client_creds
+    type: simple_credentials
+    default:
+      identity: weave_scope
+    label: "UAA Proxy Client Secret"
+  manifest: |
+    ---
+    uaaproxy:
+      listen_address: ":8080"
+      backend_address: "http://localhost:4040"
+      session:
+        auth_key: "(( uaaproxy_session_auth_key.value ))"
+        encrypt_key: "(( uaaproxy_session_encrypt_key.value ))"
+      redirect:
+        port: "(( ..cf.properties.logger_endpoint_port.value ))"
+        protocol: "https"
+      uaa:
+        url: "https://uaa.(( ..cf.cloud_controller.system_domain.value ))"
+        internal_url: "https://uaa.service.cf.internal:8443"
+        required_scopes:
+        - "cloud_controller.admin"
+        token_ttl: "2m"
+        proxy_client:
+          name: "Weave Scope"
+          id: "(( uaaproxy_proxy_client_creds.identity ))"
+          secret: "((  uaaproxy_proxy_client_creds.password ))"
+          redirect_url: "https://scope.(( ..cf.cloud_controller.system_domain.value ))/auth/callback"
+        register_proxy_client: true
+        admin_client:
+          id: "(( ..cf.uaa.admin_client_credentials.identity ))"
+          secret: "(( ..cf.uaa.admin_client_credentials.password ))"
+        ca_cert: "(( $ops_manager.ca_certificate ))"
+    route_registrar:
+      routes:
+      - name: scope
+        port: 8080
+        registration_interval: 20s
+        tags:
+          component: "scope"
+        uris:
+        - "scope.(( ..cf.cloud_controller.system_domain.value ))"
 
 - name: add-probe
   resource_label: Install Scope Probe
   templates:
   - name: configurator
-    release: runtime-configurator
+    release: <%= releases['runtime-configurator'].name %>
   errand: true
   resource_definitions:
   - name: ram
@@ -170,7 +245,7 @@ job_types:
   resource_label: Uninstall Scope Probe
   templates:
   - name: configurator
-    release: runtime-configurator
+    release: <%= releases['runtime-configurator'].name %>
   errand: true
   resource_definitions:
   - name: ram
