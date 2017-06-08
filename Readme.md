@@ -5,6 +5,8 @@ git submodule update --recursive --init
 docker run -v $(pwd):/work -ti lmarsden/p-weave-builder
 ```
 
+This builds a tile (`.pivotal` file), which is the artifact which you can upload to ops manager.
+
 # (optional) Building the Tile Builder Docker Image
 
 ```
