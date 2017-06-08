@@ -1,18 +1,19 @@
 # Building the Tile
 
 ```
-# prerequisite
-go get github.com/cloudfoundry/bosh-cli
-
-# create releases
-bosh-cli create-release --dir releases/weave-scope-release --tarball releases/weave-scope.tgz releases/weave-scope-release/releases/weave-scope/weave-scope-0.0.12.yml
-bosh-cli create-release --dir releases/runtime-configurator-release --tarball releases/runtime-configurator.tgz releases/runtime-configurator-release/releases/runtime-configurator/runtime-configurator-0.0.1.yml
-bosh-cli create-release --dir releases/uaa-proxy-release --tarball releases/uaa-proxy.tgz releases/uaa-proxy-release/releases/uaa-proxy/uaa-proxy-0.0.2.yml
-
-# download releases
-wget -O releases/cf-routing.tgz https://bosh.io/d/github.com/cloudfoundry-incubator/cf-routing-release?v=0.156.0
-wget -O releases/consul.tgz https://bosh.io/d/github.com/cloudfoundry-incubator/consul-release?v=170
-
-# create tile
-docker run -v $(pwd):/work -ti lmarsden/hangar -n weave-cloud -r /work/releases -m /work/metadata/p-weave.yml -c /work/content_migrations/p-weave.yml -g /work/migrations -v 0.0.1 -s 3363
+git submodule update --recursive --init
+docker run -v $(pwd):/work -ti lmarsden/p-weave-builder $TILE_VERSION_NUMBER
 ```
+
+Specify `$TILE_VERSION_NUMBER` as, for example, `0.0.1`.
+
+This builds a tile (`.pivotal` file), which is the artifact which you can upload to ops manager.
+
+# (optional) Building the Tile Builder Docker Image
+
+```
+docker build -t $YOUR_DOCKERHUB_USERNAME/p-weave-builder .
+docker push $YOUR_DOCKERHUB_USERNAME/p-weave-builder
+```
+
+Then substitute `lmarsden` with `$YOUR_DOCKERHUB_USERNAME` in "Building the Tile" above.
