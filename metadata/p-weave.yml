@@ -35,9 +35,22 @@ stemcell_criteria:
   requires_cpi: false
   version: <%= stemcell_version %>
 
-property_blueprints: []
+property_blueprints:
+- name: weave_cloud_token
+  type: string
+  configurable: true
+  optional: true
 
-form_types: []
+form_types:
+- name: explore
+  label: Explore
+  description: View, control, and troubleshoot your deployments using Weave Scope
+  property_inputs:
+  - reference: ".properties.weave_cloud_token"
+    label: Weave Cloud Service Token
+    description: |
+      Specifying this token allows you send Scope reports from your BOSH
+      deployments to your cloud.weave.works account. Optional.
 
 job_types:
 - name: scope-app
@@ -218,6 +231,11 @@ job_types:
               weave_scope_app:
                 from: weave_scope_app
                 deployment: (( .deployment_name ))
+            properties:
+              weave:
+                scope:
+                  probe:
+                    service_token: "(( .properties.weave_cloud_token.value ))"
         - name: scope-garden
           include:
             deployments:
