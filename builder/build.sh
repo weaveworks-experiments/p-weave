@@ -1,6 +1,7 @@
 #!/bin/bash -xe
-if [ "$1" -eq "" ]; then
+if [ "$1" = "" ]; then
     echo "Please specify a version number (e.g. 0.0.1) as the first argument"
+    exit 1
 fi
 
 # create releases
