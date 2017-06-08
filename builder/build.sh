@@ -6,8 +6,8 @@ bosh-cli create-release --dir releases/runtime-configurator-release --tarball re
 bosh-cli create-release --dir releases/uaa-proxy-release --tarball releases/uaa-proxy.tgz releases/uaa-proxy-release/releases/uaa-proxy/uaa-proxy-0.0.2.yml
 
 # download releases
-wget -O releases/cf-routing.tgz https://bosh.io/d/github.com/cloudfoundry-incubator/cf-routing-release?v=0.156.0
-wget -O releases/consul.tgz https://bosh.io/d/github.com/cloudfoundry-incubator/consul-release?v=170
+curl -sSL -o releases/cf-routing.tgz "https://bosh.io/d/github.com/cloudfoundry-incubator/cf-routing-release?v=0.156.0"
+curl -sSL -o releases/consul.tgz "https://bosh.io/d/github.com/cloudfoundry-incubator/consul-release?v=170"
 
 # create tile
 /usr/local/bundle/bin/hangar -n weave-cloud -r /work/releases -m /work/metadata/p-weave.yml -c /work/content_migrations/p-weave.yml -g /work/migrations -v 0.0.1 -s 3363
