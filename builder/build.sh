@@ -23,4 +23,4 @@ curl -sSL -o releases/cf-routing.tgz "https://bosh.io/d/github.com/cloudfoundry-
 curl -sSL -o releases/consul.tgz "https://bosh.io/d/github.com/cloudfoundry-incubator/consul-release?v=170"
 
 # create tile
-/usr/local/bundle/bin/hangar -n weave-cloud -r /work/releases -m /work/metadata/p-weave.yml -c /work/content_migrations/p-weave.yml -g /work/migrations -v $1 -s 3363
+/usr/local/bundle/bin/hangar -n weave-cloud -r /work/releases -m /work/metadata/p-weave.yml -c /work/content_migrations/p-weave.yml -g /work/migrations/v1 -v $1 -s 3421
