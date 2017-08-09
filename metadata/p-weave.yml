@@ -29,6 +29,9 @@ releases:
 - name: <%= releases['routing'].name %>
   file: <%= releases['routing'].file %>
   version: <%= releases['routing'].version %>
+- name: <%= releases['prometheus'].name %>
+  file: <%= releases['prometheus'].file %>
+  version: <%= releases['prometheus'].version %>
 
 stemcell_criteria:
   os: ubuntu-trusty
@@ -318,6 +321,104 @@ job_types:
         addons:
         - name: scope-probe
         - name: scope-garden
+
+- name: prometheus
+  resource_label: Prometheus Forwarder
+  templates:
+  - name: prometheus
+    release: <%= releases['prometheus'].name %>
+  - name: cf_exporter
+    release: <%= releases['prometheus'].name %>
+  - name: firehose_exporter
+    release: <%= releases['prometheus'].name %>
+  - name: bosh_exporter
+    release: <%= releases['prometheus'].name %>
+  resource_definitions:
+  - name: ram
+    type: integer
+    configurable: true
+    default: 1024
+    constraints:
+      min: 512
+  - name: ephemeral_disk
+    type: integer
+    configurable: true
+    default: 512
+    constraints:
+      min: 512
+  - name: persistent_disk
+    type: integer
+    configurable: false
+    default: 0
+  - name: cpu
+    type: integer
+    configurable: true
+    default: 2
+    constraints:
+      min: 1
+  static_ip: 0
+  dynamic_ip: 1
+  max_in_flight: 1
+  single_az_only: false
+  instance_definition:
+    name: instances
+    configurable: true
+    default: 1
+  manifest: |
+    ---
+    bosh_exporter:
+      bosh:
+        url: "https://(( $director.hostname )):25555"
+        username: "(( $director.username ))"
+        password: "(( $director.password ))"
+        ca_cert: "(( $director.ca_public_key ))"
+      metrics:
+        environment: "(( ..cf.deployment_name ))"
+    cf_exporter:
+      cf:
+        api_url: "(( $runtime.system_api_url ))"
+        username: "(( ..cf.uaa.system_services_credentials.identity ))"
+        password: "(( ..cf.uaa.system_services_credentials.password ))"
+        deployment_name: "(( ..cf.deployment_name ))"
+      skip_ssl_verify: true
+      metrics:
+        environment: "(( ..cf.deployment_name ))"
+      web:
+        port: 9193
+    firehose_exporter:
+      metrics:
+        environment: "(( ..cf.deployment_name ))"
+      skip_ssl_verify: true
+      web:
+        port: 9186
+      doppler:
+        url: "wss://doppler.(( ..cf.cloud_controller.system_domain.value )):443"
+      uaa:
+        url: "https://uaa.(( ..cf.cloud_controller.system_domain.value ))"
+        client_id: "(( ..cf.uaa.system_services_credentials.identity ))"
+        client_secret: "(( ..cf.uaa.system_services_credentials.password ))"
+    prometheus:
+      remote_write:
+      - url: "https://cloud.weave.works/api/prom/push"
+        basic_auth:
+          password: "(( .properties.weave_cloud_token.value ))"
+      scrape_configs:
+      - job_name: prometheus
+        static_configs:
+        - targets:
+          - localhost:9090
+      - job_name: cf
+        static_configs:
+        - targets:
+          - localhost:9193
+      - job_name: firehose
+        static_configs:
+        - targets:
+          - localhost:9186
+      - job_name: bosh
+        static_configs:
+        - targets:
+          - localhost:9190
 
 post_deploy_errands:
 - name: add-probe

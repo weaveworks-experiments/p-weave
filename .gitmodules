@@ -7,3 +7,6 @@
 [submodule "releases/uaa-proxy-release"]
 	path = releases/uaa-proxy-release
 	url = https://github.com/st3v/uaa-proxy-release.git
+[submodule "releases/prometheus-boshrelease"]
+	path = releases/prometheus-boshrelease
+	url = https://github.com/cloudfoundry-community/prometheus-boshrelease.git
