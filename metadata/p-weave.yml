@@ -40,20 +40,20 @@ stemcell_criteria:
 
 property_blueprints:
 - name: weave_cloud_token
-  type: string
+  type: secret
   configurable: true
   optional: true
 
 form_types:
 - name: explore
-  label: Explore
-  description: View, control, and troubleshoot your deployments using Weave Scope
+  label: Weave Cloud
+  description: Explore and monitor your CF deployment using Weave Cloud
   property_inputs:
   - reference: ".properties.weave_cloud_token"
     label: Weave Cloud Service Token
     description: |
-      Specifying this token allows you send Scope reports from your BOSH
-      deployments to your cloud.weave.works account. Optional.
+      Optional. Specifying a service token allows you to explore and monitor
+      your Cloud Foundry deployment from within your Weave Cloud account.
 
 job_types:
 - name: scope-app
