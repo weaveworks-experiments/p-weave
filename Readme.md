@@ -2,7 +2,7 @@
 
 ```
 git submodule update --recursive --init
-docker run -v $(pwd):/work -ti lmarsden/p-weave-builder $TILE_VERSION_NUMBER
+docker run -v $(pwd):/work -ti st3v/p-weave-builder $TILE_VERSION_NUMBER
 ```
 
 Specify `$TILE_VERSION_NUMBER` as, for example, `0.0.1`.
@@ -16,4 +16,4 @@ docker build -t $YOUR_DOCKERHUB_USERNAME/p-weave-builder .
 docker push $YOUR_DOCKERHUB_USERNAME/p-weave-builder
 ```
 
-Then substitute `lmarsden` with `$YOUR_DOCKERHUB_USERNAME` in "Building the Tile" above.
+Then substitute `st3v` with `$YOUR_DOCKERHUB_USERNAME` in "Building the Tile" above.
