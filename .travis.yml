@@ -20,10 +20,14 @@ before_install:
 script:
   - docker build -t p-weave-builder .
   - docker run -v $(pwd):/work -ti p-weave-builder $TILE_VERSION
+  - tar -tf weave-cloud-${TILE_VERSION}.pivotal
+  - ls -sh weave-cloud-${TILE_VERSION}.pivotal
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u "$DOCKER_USER" -p "$DOCKER_PASS";
+    docker tag p-weave-builder weaveworks/p-weave-builder:latest;
     docker tag p-weave-builder weaveworks/p-weave-builder:${BUILDER_VERSION_PREFIX}.${TRAVIS_BUILD_NUMBER};
+    docker push weaveworks/p-weave-builder:latest;
     docker push weaveworks/p-weave-builder:${BUILDER_VERSION_PREFIX}.${TRAVIS_BUILD_NUMBER};
     fi
