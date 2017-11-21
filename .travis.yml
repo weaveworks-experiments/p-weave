@@ -20,7 +20,6 @@ before_install:
 script:
   - docker build -t p-weave-builder .
   - docker run -v $(pwd):/work -ti p-weave-builder $TILE_VERSION
-  - sudo tar -tf weave-cloud-${TILE_VERSION}.pivotal
   - sudo ls -sh weave-cloud-${TILE_VERSION}.pivotal
 
 after_success:
