@@ -20,8 +20,8 @@ before_install:
 script:
   - docker build -t p-weave-builder .
   - docker run -v $(pwd):/work -ti p-weave-builder $TILE_VERSION
-  - tar -tf weave-cloud-${TILE_VERSION}.pivotal
-  - ls -sh weave-cloud-${TILE_VERSION}.pivotal
+  - sudo tar -tf weave-cloud-${TILE_VERSION}.pivotal
+  - sudo ls -sh weave-cloud-${TILE_VERSION}.pivotal
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
