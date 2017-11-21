@@ -10,17 +10,7 @@ latest_scope=$(ls releases/weave-scope-release/releases/weave-scope/ |sort --ver
 bosh-cli create-release --dir releases/weave-scope-release --tarball releases/weave-scope.tgz \
     releases/weave-scope-release/releases/weave-scope/$latest_scope
 
-latest_runtime_configurator=$(ls releases/runtime-configurator-release/releases/runtime-configurator/ |sort --version-sort --field-separator=- --key=3,3 |tail -n 1)
-bosh-cli create-release --dir releases/runtime-configurator-release --tarball releases/runtime-configurator.tgz \
-    releases/runtime-configurator-release/releases/runtime-configurator/$latest_runtime_configurator
-
-latest_uaa_proxy=$(ls releases/uaa-proxy-release/releases/uaa-proxy/ |sort --version-sort --field-separator=- --key=3,3 |tail -n 1)
-bosh-cli create-release --dir releases/uaa-proxy-release --tarball releases/uaa-proxy.tgz \
-    releases/uaa-proxy-release/releases/uaa-proxy/$latest_uaa_proxy
-
 # download releases
-curl -sSL -o releases/cf-routing.tgz "https://bosh.io/d/github.com/cloudfoundry-incubator/cf-routing-release?v=0.156.0"
-curl -sSL -o releases/consul.tgz "https://bosh.io/d/github.com/cloudfoundry-incubator/consul-release?v=170"
 curl -sSL -o releases/prometheus.tgz "https://github.com/cloudfoundry-community/prometheus-boshrelease/releases/download/v18.0.0/prometheus-18.0.0.tgz"
 
 # create tile
