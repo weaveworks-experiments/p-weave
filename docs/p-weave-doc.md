@@ -178,7 +178,7 @@ As an alternative to integrating with Weave Cloud, you can deploy an instance of
 
 Once you've made your changes to the tile configuration, click the Apply Changes button in Ops Manager and go for a coffee.
 
-##<a id="how"></a>How it works
+## <a id="how"></a>How it works
 
 ### <a id="wc-explore"></a>Weave Cloud Explore
 
