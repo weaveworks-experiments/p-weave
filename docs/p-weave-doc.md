@@ -130,7 +130,7 @@ To explore and monitor your Cloud Foundry deployment from within Weave Cloud, pr
 
 The Cloud Foundry platform integration supports only the [Explore](https://www.weave.works/docs/cloud/latest/concepts/explore-and-troubleshoot/) and [Monitor](https://www.weave.works/docs/cloud/latest/concepts/prometheus-monitoring/) features of Weave Cloud.
 
-![PCF Ops Manager Settings tab](docs/images/PCF-opsmgr-wctoken.png)
+![PCF Ops Manager Settings tab](images/PCF-opsmgr-wctoken.png)
 
 After you’ve entered the service token correctly in the PCF Ops Manager, go to Weave Cloud and click Explore, where you should see something similar to the screen capture shown below:
 
