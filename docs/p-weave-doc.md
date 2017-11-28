@@ -120,7 +120,7 @@ For more information, see [JMXTrans Agent Integration](jmxtrans.html).
 
 After [downloading the tile](#download), import it into Pivotal Ops Manager and then. After importing, assign availability zones and networks in the tile settings tab.
 
-![PCF Ops Manager Settings tab](/images/PCF-opsmgr-aznetworks.png)
+![PCF Ops Manager Settings tab](images/PCF-opsmgr-aznetworks.png)
 
 Once the network assignments are configured, you can either choose to set up the tile to integrate with your [Weave Cloud account](#wc-integration) or you can run [Weave Scope] inside your own cloud.
 
