@@ -134,13 +134,13 @@ The Cloud Foundry platform integration supports only the [Explore](https://www.w
 
 After you’ve entered the service token correctly in the PCF Ops Manager, go to Weave Cloud and click Explore, where you should see something similar to the screen capture shown below:
 
-![Weave Cloud Explore for PCF](/images/wc-pcf-platform-integration.png)
+![Weave Cloud Explore for PCF](images/wc-pcf-platform-integration.png)
 
 ### <a id="BOSH-metrics"></a>Querying BOSH Metrics with Weave Cloud
 
 Weave Cloud includes a time-series interface for querying BOSH metrics. In this instance CPU and Memory usage are graphed:
 
-![BOSH Metrics in Weave Cloud](/images/bosh-metrics.png)
+![BOSH Metrics in Weave Cloud](images/bosh-metrics.png)
 
 ## <a id="wc-cloud-foundry"></a>How to Use Weave Cloud with Cloud Foundry
 
@@ -148,17 +148,17 @@ Weave Cloud includes a time-series interface for querying BOSH metrics. In this 
 
 Explore allows you to visualize a live map of your Cloud Foundry platform. This has been described as "seeing Cloud Foundry for the first time". As a Cloud Foundry operator, it helps you understand and teach people about the system, as well as debug issues with your Cloud Foundry deployment. For example, you can ask "what's the Cloud Controller doing?"
 
-![Explore the Cloud Controller in Weave Cloud](/images/cloud-controller-explore.png)
+![Explore the Cloud Controller in Weave Cloud](images/cloud-controller-explore.png)
 
 You can see the outbound connections that it's making to NATS, the Consul server, etc.
 
 Using Weave Cloud, you can even travel back in time and ask questions like "What was the Cloud Controller Worker doing at 3am this morning?"
 
-![Time travel with Weave Cloud](/images/cloud-controller-timeline.png)
+![Time travel with Weave Cloud](images/cloud-controller-timeline.png)
 
 As well as seeing individual VMs in the live map that Explore gives you, it can also show you the relationships between different containerized apps running on the platform:
 
-![View Container relationships](/images/container-detail.png)
+![View Container relationships](images/container-detail.png)
 
 For example you can see the relationships between the containers (diego cells) that make up the [Spring Boot Eureka Demo](https://github.com/cloudfoundry-incubator/cf-networking-release/tree/develop/src/example-apps/eureka), and also demonstrate CloudFoundry's CNI support for direct container-to-container communications.
 
@@ -168,13 +168,13 @@ Monitor allows you to gather and push time-series metrics about the health of th
 
 For example, here we can group the CPU usage in the system by the BOSH job it corresponds to:
 
-![Monitor CPU usage](/images/BOSH-job-cpu.png)
+![Monitor CPU usage](images/BOSH-job-cpu.png)
 
 ### <a id="wc-scope"></a>Weave Cloud Explore (Scope) Standalone
 
 As an alternative to integrating with Weave Cloud, you can deploy an instance of the Weave Scope App inside your own cloud. To do this, leave the Weave Cloud Service Token field empty and then select Resource Config and set the number of Weave Scope App instances to one or more.
 
-![Resource Config Settings Tab](/images/resource-config.png)
+![Resource Config Settings Tab](images/resource-config.png)
 
 Once you've made your changes to the tile configuration, click the Apply Changes button in Ops Manager and go for a coffee.
 
@@ -190,7 +190,7 @@ After you’ve configured the tile to deploy a standalone Scope App inside your 
 
 The standalone Scope App integrates with Cloud Foundry’s User Account and Authentication (UAA) Server. In order to use the app, login as a cloud_controller.admin user and authorize Weave Scope.
 
-![Authorize your app](/images/pivotal-authorize-weave-scope.png)
+![Authorize your app](images/pivotal-authorize-weave-scope.png)
 
 If the PCF tile is configured to work with Weave Cloud, you can explore your Cloud Foundry deployment by signing into your Weave Cloud account and going to the Explore tab.
 
@@ -200,7 +200,7 @@ When configured with Weave Cloud, the tile deploys a VM running Prometheus that 
 
 ### <a id="wc-explore-monitor"></a>Explore & Monitor (integrated with Weave Cloud)
 
-![](/images/explore-monitor.png)
+![](images/explore-monitor.png)
 
 If a Weave Cloud token is entered during the installation, Prometheus is deployed in a separate VM in your PCF cloud. Prometheus scrapes metrics from the Cloud Controller and BOSH director and then forwards them on to Weave Cloud, where they can be easily queried and graphed.
 
@@ -208,7 +208,7 @@ Additionally, the Explore Agent (aka Scope Agent), shown with a * on the diagram
 
 ### <a id="explore-only"></a>Explore only (standalone, without Weave Cloud)
 
-![Scope App in your cloud](/images/explore-only.png)
+![Scope App in your cloud](images/explore-only.png)
 
 In standalone mode, without Weave Cloud,  only the Explore functionality is available.
 
