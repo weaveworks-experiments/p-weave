@@ -118,11 +118,11 @@ For more information, see [JMXTrans Agent Integration](jmxtrans.html).
 
 ## <a id="installing"></a> How to install it
 
-After [downloading the tile](#download), import it into Pivotal Ops Manager and then. After importing, assign availability zones and networks in the tile settings tab.
+After [downloading the tile](#download), import it into Pivotal Ops Manager and then assign availability zones and networks in the tile settings tab.
 
 ![PCF Ops Manager Settings tab](images/PCF-opsmgr-aznetworks.png)
 
-Once the network assignments are configured, you can either choose to set up the tile to integrate with your [Weave Cloud account](#wc-integration) or you can run [Weave Scope] inside your own cloud.
+Once the network assignments are configured, you can either choose to set up the tile to integrate with your [Weave Cloud account](#wc-integration) or you can run [Weave Scope](#wc-scope) inside your own cloud.
 
 ## <a id="wc-integration"></a>Weave Cloud Integration with PCF
 
