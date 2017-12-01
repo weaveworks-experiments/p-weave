@@ -1,14 +1,14 @@
 ---
-title: Weave Cloud Service Broker for PCF
+title: Weave Cloud for PCF
 owner: Partners
 ---
 
-The Weave Cloud Service Broker for Pivotal Cloud Foundry (PCF) tile enables operators and app developers to track all system and application metrics from their PCF installation in one place:
+The Weave Cloud for Pivotal Cloud Foundry (PCF) tile enables operators and app developers to track all system and application metrics from their PCF installation in one place:
 
  - [What is Weave Cloud?](#overview)
  - [Key Features](#features)
    - [Product Snapshot](#snapshot)
- - [Download Weave Cloud Broker for PCF](#download)
+ - [Download Weave Cloud for PCF](#download)
    - [Requirements](#reqs)
    - [Prerequisites](#prerequisites)
  - [How to install it](#installing)
@@ -31,13 +31,13 @@ The Weave Cloud Service Broker for Pivotal Cloud Foundry (PCF) tile enables oper
 
 ## <a id='overview'></a>What is Weave Cloud?
 
-[Weaveworks](https://www.weave.works) is building a one-click ops platform for development teams by baking in the operational expertise to deploy, explore, and monitor apps and services running in a cluster. Weave Cloud is the ops platform. Weave Cloud Service Broker for PCF allows Pivotal PCF users to use the [explore](https://www.weave.works/docs/cloud/latest/concepts/explore-and-troubleshoot/) and [monitor](https://www.weave.works/docs/cloud/latest/concepts/prometheus-monitoring/) features of Weave Cloud.
+[Weaveworks](https://www.weave.works) is building a one-click ops platform for development teams by baking in the operational expertise to deploy, explore, and monitor apps and services running in a cluster. Weave Cloud is the ops platform. Weave Cloud  for PCF allows Pivotal PCF users to use the [explore](https://www.weave.works/docs/cloud/latest/concepts/explore-and-troubleshoot/) and [monitor](https://www.weave.works/docs/cloud/latest/concepts/prometheus-monitoring/) features of Weave Cloud.
 
 The target audience for the Weave Cloud PCF tile are Pivotal Cloud Foundry users: that is, people who are deploying, monitoring, and operating their applications on PCF
 
 ## <a id='features'></a>Key Features
 
-Weave Cloud Service Broker for PCF includes the following key features:
+Weave Cloud for PCF includes the following key features:
 
 * **PCF monitoring**: Collects metrics emitted by all components of PCF
 * **IaaS-level monitoring**: Collects metrics from CPU, memory usage, IO, network, VM states, and more, regardless of the underlying infrastructure
@@ -52,7 +52,7 @@ Weave Cloud Service Broker for PCF includes the following key features:
 
 ### <a id="snapshot"></a>Product Snapshot
 
-The following table provides version and version-support information about Weave Cloud Service Broker for PCF.
+The following table provides version and version-support information about Weave Cloud for PCF.
 
 <table class="nice">
     <th>Element</th>
@@ -89,11 +89,11 @@ The following table provides version and version-support information about Weave
 
 ## <a id="download"></a>Download Weave Cloud Broker for PCF
 
-Download the Weave Cloud Service Broker  PCF tile from the Pivotal Network at https://network.pivotal.io/products/p-weave.
+Download the Weave Cloud PCF tile from the Pivotal Network at https://network.pivotal.io/products/p-weave.
 
 ### <a id="prerequisites"></a>Prerequisites
 
-To complete installation of Weave Cloud Service Broker for PCF, you need the following:
+To complete installation of Weave Cloud for PCF, you need the following:
 
 * An AWS S3 bucket or WebDAV with credentials to store alert images from Grafana
 * Alert notification endpoint (SMTP server for email notifications, Slack, Sensu) with credentials
@@ -111,7 +111,7 @@ Weave Cloud PCF has the following requirements:
 * Installation of the collectd add-on for PCF to enable PCF component VMs and
   the VMs of any other BOSH-deployed services expose system metrics to Heartbeat.
 For more information, see [Installing collectd Add-on for PCF](installing.html).
-* (Optional) If you want to enable collection of JMX metrics from Java apps, you will need a custom Java buildpack for Weave Cloud Service Broker for PCF.
+* (Optional) If you want to enable collection of JMX metrics from Java apps, you will need a custom Java buildpack for Weave Cloud for PCF.
 For more information, see [JMXTrans Agent Integration](jmxtrans.html).
 * (Optional) If you want to enable collection of custom application metrics, you must integrate a StatsD library into the app's code.
   For more information, see [StatsD Integration](statsd.html).
