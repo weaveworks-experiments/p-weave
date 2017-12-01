@@ -14,4 +14,4 @@ bosh-cli create-release --dir releases/weave-scope-release --tarball releases/we
 curl -sSL -o releases/prometheus.tgz "https://github.com/cloudfoundry-community/prometheus-boshrelease/releases/download/v18.0.0/prometheus-18.0.0.tgz"
 
 # create tile
-/usr/local/bundle/bin/hangar -n weave-cloud -r /work/releases -m /work/metadata/p-weave.yml -c /work/content_migrations/p-weave.yml -g /work/migrations/v1 -v $1 -s 3421
+/usr/local/bundle/bin/hangar -n weave-cloud -r /work/releases -m /work/metadata/p-weave.yml -c /work/content_migrations/p-weave.yml -g /work/migrations/v1 -v $1 -s 3468
