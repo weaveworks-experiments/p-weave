@@ -87,7 +87,7 @@ The following table provides version and version-support information about Weave
     </tr>
 </table>
 
-## <a id="download"></a>Download Weave Cloud Broker for PCF
+## <a id="download"></a>Download Weave Cloud for PCF
 
 Download the Weave Cloud PCF tile from the Pivotal Network at https://network.pivotal.io/products/p-weave.
 
